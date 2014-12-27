@@ -8,7 +8,6 @@ logo: false
 paginate: 15
 baseurl: /
 domain_name: 'http://blog.earthson.net'
-disqus: true
 
 
 # Details for the RSS feed generator
