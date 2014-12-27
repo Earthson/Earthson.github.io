@@ -1,0 +1,15 @@
+name: Earthson's Blog
+description: Endless Life
+meta_description: ":)"
+
+markdown: kramdown
+highlighter: pygments
+logo: false
+paginate: 15
+baseurl: /
+domain_name: 'http://blog.earthson.net'
+
+
+# Details for the RSS feed generator
+url:            'http://blog.earthson.net'
+author:         'Earthson Lu'

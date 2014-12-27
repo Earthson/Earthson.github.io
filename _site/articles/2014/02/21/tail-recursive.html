@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Earthson's Blog - Endless Life</title>
+    <meta name="description" content=":)" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/">Home</a>
+        <a class="subscribe-button icon-feed" href="/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">尾递归的迭代形式化</h1>
+            <section class="post-meta">                
+                <time class="post-date" datetime="2014-02-21">21 Feb 2014</time>
+                 
+                    on articles 
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://blog.earthson.net">
+                
+                    <span class="blog-title">Earthson's Blog</span>
+                 
+            </a>
+        </header> -->
+        
+        <!-- <span class="post-meta">
+            <time datetime="2014-02-21">21 Feb 2014</time>
+             
+                on articles 
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">尾递归的迭代形式化</h1> -->
+
+        <section class="post-content">
+            <p><em>尾递归虽然在形式上是递归，但在逻辑上它和迭代等价</em></p>
+
+<p>我们先从阶乘这个喜闻乐见的例子开始：</p>
+
+<h4 id="section">递归</h4>
+
+<div class="highlight"><pre><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="k">rec</span> <span class="n">fact</span> <span class="n">n</span> <span class="o">=</span> 
+    <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span> <span class="mi">1</span>
+    <span class="k">else</span> <span class="n">n</span><span class="o">*</span><span class="n">fact</span> <span class="o">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">);;</span></code></pre></div>
+
+<p>上面就是一个很普通的递归写法，我们把问题划分为更小的子问题，然后通过操作子问题的解生成原问题的解。这是一种典型的递归策略，通俗易懂。这也使得递归结构成为几乎最容易理解的结构（如果你给出些许说明的话）。</p>
+
+<h4 id="section-1">尾递归</h4>
+
+<p>我们再看尾递归写法是怎么搞的：</p>
+
+<div class="highlight"><pre><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="n">fact</span> <span class="o">=</span> 
+	<span class="k">let</span> <span class="k">rec</span> <span class="n">f</span> <span class="n">ans</span> <span class="n">n</span> <span class="o">=</span> 
+		<span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span> <span class="n">ans</span> 
+		<span class="k">else</span> <span class="n">f</span> <span class="o">(</span><span class="n">ans</span><span class="o">*</span><span class="n">n</span><span class="o">)</span> <span class="o">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span> 
+	<span class="k">in</span> <span class="n">f</span> <span class="mi">1</span><span class="o">;;</span></code></pre></div>
+
+<p>看起来好像并不复杂，但是也不直观（至少对于不了解尾递归写法的人来说）。我相信多数人都下意识的会认为这样的写法投机取巧，反人类，完全无法阅读。呵呵，它真的是如此吗？</p>
+
+<h3 id="section-2">循环</h3>
+
+<p>我们再来看下C语言的for循环写出来什么样子：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">True</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
+        <span class="k">else</span> <span class="n">ans</span> <span class="o">*=</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>你觉得这段代码易于阅读吗？</p>
+
+<p>如果你对C语言有基本的了解，我相信你能读懂这段代码。就像你了解for语句的结构一样，一旦你了解尾递归的结构，可读性和直观的也就伴随而来了。实际上，尾递归并非是一个trick，它在数学上表现得非常优雅，在事实上的“表达力”是超过循环的（你可以用更短的代码，表现更复杂的迭代，并且不失可读性）。</p>
+
+<h2 id="section-3">什么是尾递归(尾调用)</h2>
+
+<p>顾名思义，位于函数尾部的递归。这个尾，指的是调用的尾。也就是这个函数在递归调用之后，直接返回调用结果，不会再做更多操作。如果按照上面递归的思路来理解就是，“子”问题和原问题“等价”（并非真的等价，单向的），我们解决了子问题，也即解决了原问题。当然，我觉得这种理解丝毫不能帮助你理解和编写尾递归程序，因为构造一个等价问题往往是不直观的，而把原问题分解为多个子问题才是更自然的想法。所以递归带来直观并不适用于尾递归，这点上其实循环也并无不同。</p>
+
+<h3 id="section-4">向量化</h3>
+
+<p>我们改变思考问题的策略。我们不关注问题的本身，而只关注尾递归的形式。因为尾递归的过程，不会再返回调用函数进行额外操作，所以，我们把一个关于函数<code>f</code>的问题，映射到一个关于函数<code>g</code>的问题。</p>
+
+<p>这里的技巧在于，我们把函数和它的参数看成一个向量。上面尾递归形式的阶乘的实际上就是：</p>
+
+<p><em>当<code>n&gt;0</code>，我们把向量<code>f ans n</code>映射到向量<code>f (ans*n) (n-1)</code></em></p>
+
+<p>实际上我们只是做了一些判断，然后把一个向量映射到另一个向量！然后在某个特定条件下，我们把向量映射到某个值，迭代结束。</p>
+
+<p><em>我们不断变换这个向量，直到它满足某个条件</em></p>
+
+<h3 id="section-5">参数向量</h3>
+
+<p>当<code>f</code>和<code>g</code>相同的时候，我们实际上就是对参数向量做变换。</p>
+
+<h3 id="section-6">形式化</h3>
+
+<div class="highlight"><pre><code class="language-ocaml" data-lang="ocaml"><span class="n">iter</span> <span class="n">args</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">expr</span> <span class="k">then</span> <span class="n">res</span>
+    <span class="k">else</span> <span class="n">iter</span> <span class="n">args_new</span></code></pre></div>
+
+<p>条件部分除了条件语句还可以是模式匹配，可以有多分支。不管<code>args</code>有多长，分支有多少，迭代形式都会非常清晰。</p>
+
+<h3 id="section-7">可读性</h3>
+
+<p>尾递归不会因为它参数序列的变长而丢失它的可读性，因为它总是有着一致的迭代语义，层次分明。相比之下，传统的循环会随着变量的增多，变量会散落在循环各处。</p>
+
+<h3 id="section-8">直观性</h3>
+
+<p>你理解代码的结构，并不代表你真的理解代码真正在做的事情。对于复杂的算法来说，有什么办法能带来直观性吗？那自然是不会有的，你唯一能做的就是让算法描述和代码结构尽量一致，这样你就不需要变换形式就能理解了。</p>
+
+<p>我并不觉得循环相比尾递归形式带来了更多的直观性，因为尾递归更加形式化，算法很容易用这种形式化的方式来表述（虽然有很多算法的伪码是用循环来表述的）。</p>
+
+<h2 id="tco">尾调用优化(TCO)</h2>
+
+<p>因为尾调用的调用位于函数的尾部，所以函数直接把该调用的输出作为函数自己的输出。所以，保留当前函数的调用栈是毫无必要的。所以加入尾调用优化的的尾调用形式可以避免随着调用深度的增加导致栈溢出。</p>
+
+<p>如果上面的形式化在逻辑上说明了尾调用的表达力的话，那么TCO的存在就使得尾调用就是事实上的迭代。它不会因为调用的深入导致调用栈溢出。</p>
+
+<hr />
+
+<p>我们看到，其实尾递归（尾调用）不论在形式上还是逻辑上都比递归更加接近迭代，而且往往比循环语句表现的迭代更加形式化，结构也更加一致。反正我是找不到任何理由拒绝尾递归的使用，除非该语言没有提供TCO。</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/" style="background-image: url(/assets/images/profile.png)">
+                    <span class="hidden">Earthson Lu's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Earthson Lu </h4>
+                    <!-- Author Bio -->
+                    <p> 
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>                
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=尾递归的迭代形式化&amp;url=http://blog.earthson.net/articles/2014/02/21/tail-recursive.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.earthson.net/articles/2014/02/21/tail-recursive.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.earthson.net/articles/2014/02/21/tail-recursive.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+            
+            <!-- Disqus comments -->
+            
+            
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/">Earthson's Blog</a> &copy; 
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using 
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+    <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
+</html>
