@@ -12,7 +12,7 @@
     <item>
       <title>尾递归的迭代形式化</title>
       <link>http://blog.earthson.net/articles/2014/02/21/tail-recursive.html</link>
-      <description>&lt;p&gt;&lt;em&gt;尾递归虽然在形式上是递归，但在逻辑上它和迭代等价&lt;/em&gt;&lt;/p&gt;
+      <description>&lt;p&gt;本文旨在阐述如下事实:&lt;/p&gt;
 
 </description>
       <pubDate>Fri, 21 Feb 2014 00:00:00 +0800</pubDate>

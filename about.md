@@ -3,4 +3,6 @@ layout: page
 title: About me 
 ---
 
-This is a static page. It could be an 'about page' if you'd like.
+联系方式：
+
+*Email:* `Earthson.Lu#gmail.com`
