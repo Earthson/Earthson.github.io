@@ -58,13 +58,11 @@
         <!-- <h1 class="post-title">尾递归的迭代形式化</h1> -->
 
         <section class="post-content">
-            <p>本文旨在阐述如下事实:</p>
-
-<blockquote>
-  <p>尾递归虽然在形式上是递归，但在逻辑上它和迭代等价</p>
+            <blockquote>
+  <p><em>尾递归虽然在形式上是递归，但在逻辑上它和迭代等价</em></p>
 </blockquote>
 
-<p>我们先从阶乘这个喜闻乐见的例子开始：</p>
+<p>本文旨在阐述如上事实。我们先从阶乘这个喜闻乐见的例子开始：</p>
 
 <h4 id="section">递归</h4>
 
@@ -114,9 +112,7 @@
 
 <p><em>当<code>n&gt;0</code>，我们把向量<code>f ans n</code>映射到向量<code>f (ans*n) (n-1)</code></em></p>
 
-<p>实际上我们只是做了一些判断，然后把一个向量映射到另一个向量！然后在某个特定条件下，我们把向量映射到某个值，迭代结束。</p>
-
-<p><em>我们不断变换这个向量，直到它满足某个条件</em></p>
+<p>实际上我们只是做了一些判断，然后把一个向量映射到另一个向量！然后在某个特定条件下，我们把向量映射到某个值，迭代结束。<em>我们不断变换这个向量，直到它满足某个条件</em></p>
 
 <h3 id="section-5">参数向量</h3>
 
@@ -165,9 +161,9 @@
                     <!-- Author Name -->
                     <h4> Earthson Lu </h4>
                     <!-- Author Bio -->
-                    <p> 
+<!--                     <p> 
                         Here goes the author description. You might want to place some links too in here
-                    </p>
+                    </p> -->
                 </section>                
             
 
@@ -189,6 +185,22 @@
 </section>
             
             <!-- Disqus comments -->
+            
+                <section class="disqus">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+
+        var disqus_shortname = 'earthsonblog'; 
+        var disqus_developer = 0; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
             
             
         </footer>

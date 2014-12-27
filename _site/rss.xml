@@ -12,21 +12,13 @@
     <item>
       <title>尾递归的迭代形式化</title>
       <link>http://blog.earthson.net/articles/2014/02/21/tail-recursive.html</link>
-      <description>&lt;p&gt;本文旨在阐述如下事实:&lt;/p&gt;
+      <description>&lt;blockquote&gt;
+  &lt;p&gt;&lt;em&gt;尾递归虽然在形式上是递归，但在逻辑上它和迭代等价&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
 </description>
       <pubDate>Fri, 21 Feb 2014 00:00:00 +0800</pubDate>
       <dc:date>2014-02-21T00:00:00+08:00</dc:date>
-    </item>
-    <item>
-      <title>Welcome to Jekyll!</title>
-      <link>http://blog.earthson.net/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html</link>
-      <description>&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code&gt;-w&lt;/code&gt; switch) to see your changes!
-To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.&lt;/p&gt;
-
-</description>
-      <pubDate>Sun, 10 Nov 2013 18:18:00 +0800</pubDate>
-      <dc:date>2013-11-10T18:18:00+08:00</dc:date>
     </item>
     <dc:date>2014-02-21T00:00:00+08:00</dc:date>
   </channel>
